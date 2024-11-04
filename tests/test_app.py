@@ -60,21 +60,8 @@ def test_update_user(client):
     }
 
 
-def test_delete_user(client):
-    response = client.delete('/users/1')
-
-    assert response.status_code == HTTPStatus.OK
-    assert response.json() == {'message': 'User deleted'}
-
-
 # Exercícios
-def test_delete_user_should_return_not_found__exercicio(client):
-    response = client.delete('/users/666')
-
-    assert response.status_code == HTTPStatus.NOT_FOUND
-    assert response.json() == {'detail': 'User not found'}
-
-
+# 1 - Escrever um teste para o erro de 404 (NOT FOUND) para o endpoint de PUT.
 def test_update_user_should_return_not_found__exercicio(client):
     response = client.put(
         '/users/666',
@@ -88,19 +75,40 @@ def test_update_user_should_return_not_found__exercicio(client):
     assert response.json() == {'detail': 'User not found'}
 
 
-def test_get_user_should_return_not_found__exercicio(client):
-    response = client.get('/users/666')
+# 2 - Escrever um teste par o erro de 404 (NOT FOUND) para o endpoint de
+# DELETE.
+def test_delete_user_should_return_not_found__exercicio(client):
+    response = client.delete('/users/333')
 
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert response.json() == {'detail': 'User not found'}
 
 
-# def test_get_user___exercicio(client):
-#     response = client.get('/users/1')
+# 3 - Crie um endpoint GET par apegar um único recurso como users/{id} e faça
+# seus testes.
+def test_get_user___exercicio(client):
+    response = client.get('/users/1')
 
-#     assert response.status_code == HTTPStatus.OK
-#     assert response.json() == {
-#         'username': 'bob',
-#         'email': 'bob@example.com',
-#         'id': 1,
-#     }
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {
+        'username': 'bob',
+        'email': 'bob@example.com',
+        'id': 1,
+    }
+
+
+def test_get_user_should_return_not_found__exercicio(client):
+    response = client.get('/users/999')
+
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {'detail': 'User not found'}
+
+
+# Fim dos exercícios
+
+
+def test_delete_user(client):
+    response = client.delete('/users/1')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {'message': 'User deleted'}
