@@ -5,7 +5,7 @@ def test_root_deve_retornar_ok_e_ola_mundo(client):
     response = client.get('/')
 
     assert response.status_code == HTTPStatus.OK
-    assert response.json() == {'message': 'Fala cambada!!'}
+    assert response.json() == {'message': 'Olá Mundo!'}
 
 
 def test_create_user(client):
@@ -112,3 +112,15 @@ def test_delete_user(client):
 
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {'message': 'User deleted'}
+
+
+def test_get_token(client, user):
+    response = client.post(
+        '/token',
+        data={'username': user.email, 'password': user.clean_password},
+    )
+    token = response.json()
+
+    assert response.status_code == HTTPStatus.OK
+    assert 'access_token' in token
+    assert 'token_type' in token
