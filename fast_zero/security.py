@@ -3,14 +3,10 @@ from http import HTTPStatus
 
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-
 from jwt import DecodeError, decode, encode
-
 from pwdlib import PasswordHash
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
 from zoneinfo import ZoneInfo
 
 from fast_zero.database import get_session
